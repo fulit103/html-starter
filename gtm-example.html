@@ -1,0 +1,246 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <title>Camisetas Estampadas</title>
+
+    <!-- Google Tag Manager -->
+    <script>(function(w,d,s,l,i){w[l]=w[l]||[];w[l].push({'gtm.start':
+    new Date().getTime(),event:'gtm.js'});var f=d.getElementsByTagName(s)[0],
+    j=d.createElement(s),dl=l!='dataLayer'?'&l='+l:'';j.async=true;j.src=
+    'https://www.googletagmanager.com/gtm.js?id='+i+dl;f.parentNode.insertBefore(j,f);
+    })(window,document,'script','dataLayer','GTM-T45R48CR');</script>
+    <!-- End Google Tag Manager -->
+
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <script src="https://checkoutlib.billsby.com/checkout.min.js" data-billsby-company="softseguros"></script>
+
+
+    <!-- React and ReactDOM CDN -->
+    <script src="https://unpkg.com/react@17/umd/react.development.js" crossorigin></script>
+    <script src="https://unpkg.com/react-dom@17/umd/react-dom.development.js" crossorigin></script>
+    <!-- Babel for JSX rendering -->
+    <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+
+</head>
+<body class="flex flex-col min-h-screen">
+
+    <!-- Google Tag Manager (noscript) -->
+<noscript><iframe src="https://www.googletagmanager.com/ns.html?id=GTM-T45R48CR"
+    height="0" width="0" style="display:none;visibility:hidden"></iframe></noscript>
+    <!-- End Google Tag Manager (noscript) -->
+
+    <!-- Navigation Bar -->
+    <nav class="bg-white shadow-md">
+        <div class="container mx-auto flex items-center justify-between p-4">
+            <a href="index.html" class="text-xl font-bold">Camisetas Estampadas</a>
+            <ul class="flex space-x-4">
+                <li><a href="index.html" class="hover:text-blue-500">Inicio</a></li>
+                <li><a href="about.html" class="hover:text-blue-500">Nosotros</a></li>
+                <li><a href="contact.html" class="hover:text-blue-500">Contacto</a></li>
+                <li><a href="https://jebbit.jebbit.com/vtmdujgr?L=Full+Page" class="hover:text-blue-500">Quiz (T-shirt color)</a></li>
+            </ul>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section class="bg-gray-100 flex-grow">
+        <div class="container mx-auto text-center py-20">
+            <h1 class="text-5xl font-bold mb-4">Diseños Únicos en Camisetas</h1>
+            <p class="text-xl mb-8">Expresa tu estilo con nuestras camisetas estampadas de alta calidad.</p>
+            <!-- <a href="#" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600">Comprar Ahora</a> -->
+            <a href="javascript:void(0)" data-billsby-type="checkout" data-billsby-product="28924" data-billsby-plan="44376" data-billsby-cycle="53090" data-billsby-addons="[[36758,1],[36757,1],[36756,1]]">Subscribe</a>
+        </div>
+    </section>
+
+    <!-- React App Mount Point -->
+    <div id="root"></div>
+
+    <!-- Your React Code -->
+    <script type="text/babel">
+        const { useState } = React;
+
+        function ShoppingCart() {
+            const [products, setProducts] = useState([
+                { id: 1, name: 'Camiseta Diseño 1', price: 20 },
+                { id: 2, name: 'Camiseta Diseño 2', price: 25 },
+                { id: 3, name: 'Camiseta Diseño 3', price: 30 },
+            ]);
+
+            const [cart, setCart] = useState([]);
+            const [message, setMessage] = useState('');
+
+            const addToCart = (product) => {
+                setCart([...cart, product]);
+                setMessage(`${product.name} ha sido añadido al carrito.`);
+                
+                // Track event with Google Analytics
+                if (window.gtag) {
+                    window.gtag('event', 'add_to_cart', {
+                        currency: 'USD',
+                        items: [{
+                            item_id: product.id,
+                            item_name: product.name,
+                            price: product.price,
+                            quantity: 1
+                        }]
+                    });
+                }
+
+                if (window.dataLayer) {
+                    window.dataLayer.push({
+                        event: 'add_to_cart',
+                        currency: 'USD',
+                        items: [{
+                            item_id: product.id,
+                            item_name: product.name,
+                            price: product.price,
+                            quantity: 1
+                        }]
+                    });
+                }
+            };
+
+            const checkout = () => {
+                setMessage('Compra realizada con éxito.');
+                // Simulate purchase event
+                if (window.gtag) {
+                    window.gtag('event', 'purchase', {
+                        transaction_id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                        currency: 'USD',
+                        value: cart.reduce((total, product) => total + product.price, 0),
+                        items: cart.map(product => ({
+                            item_id: product.id,
+                            item_name: product.name,
+                            price: product.price,
+                            quantity: 1
+                        }))
+                    });
+                }
+
+                if (window.dataLayer) {
+                    window.dataLayer.push({
+                        event: 'purchase',
+                        transaction_id: Math.random().toString(36).substring(2, 15) + Math.random().toString(36).substring(2, 15),
+                        currency: 'USD',
+                        value: cart.reduce((total, product) => total + product.price, 0),
+                        items: cart.map(product => ({
+                            item_id: product.id,
+                            item_name: product.name,
+                            price: product.price,
+                            quantity: 1
+                        }))
+                    });
+                }
+                // Clear the cart
+                setCart([]);
+            };
+
+            return (
+                <div className="container mx-auto py-12">
+                    <h2 className="text-3xl font-bold text-center mb-8">Catálogo de Productos</h2>
+                    <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
+                        {products.map(product => (
+                            <div key={product.id} className="bg-white shadow-md rounded-lg overflow-hidden">
+                                <img src="https://via.placeholder.com/400x300" alt={product.name} />
+                                <div className="p-4">
+                                    <h3 className="text-xl font-bold mb-2">{product.name}</h3>
+                                    <p className="text-gray-600 mb-4">Precio: ${product.price}</p>
+                                    <button 
+                                        onClick={() => addToCart(product)} 
+                                        className="bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
+                                    >
+                                        Añadir al Carrito
+                                    </button>
+                                </div>
+                            </div>
+                        ))}
+                    </div>
+                    <div className="mt-8">
+                        <h2 className="text-2xl font-bold mb-4">Carrito de Compras</h2>
+                        {cart.length > 0 ? (
+                            <div>
+                                <ul>
+                                    {cart.map((item, index) => (
+                                        <li key={index}>{item.name} - ${item.price}</li>
+                                    ))}
+                                </ul>
+                                <button 
+                                    onClick={checkout} 
+                                    className="bg-green-500 text-white px-4 py-2 mt-4 rounded hover:bg-green-600"
+                                >
+                                    Comprar
+                                </button>
+                            </div>
+                        ) : (
+                            <p>El carrito está vacío.</p>
+                        )}
+                    </div>
+                    {message && <p className="mt-4 text-green-500">{message}</p>}
+                </div>
+            );
+        }
+
+        // Render the ShoppingCart component
+        ReactDOM.render(<ShoppingCart />, document.getElementById('root'));
+    </script>
+
+    <!-- Featured Products -->
+    <section class="container mx-auto py-12">
+        <h2 class="text-3xl font-bold text-center mb-8">Productos Destacados</h2>
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-8">
+            <!-- Product 1 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Producto 1">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold mb-2">Camiseta Diseño 1</h3>
+                    <p class="text-gray-600 mb-4">Descripción breve del producto.</p>
+                    <a href="#" class="text-blue-500 hover:underline">Ver Más</a>
+                </div>
+            </div>
+            <!-- Product 2 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Producto 2">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold mb-2">Camiseta Diseño 2</h3>
+                    <p class="text-gray-600 mb-4">Descripción breve del producto.</p>
+                    <a href="#" class="text-blue-500 hover:underline">Ver Más</a>
+                </div>
+            </div>
+            <!-- Product 3 -->
+            <div class="bg-white shadow-md rounded-lg overflow-hidden">
+                <img src="https://via.placeholder.com/400x300" alt="Producto 3">
+                <div class="p-4">
+                    <h3 class="text-xl font-bold mb-2">Camiseta Diseño 3</h3>
+                    <p class="text-gray-600 mb-4">Descripción breve del producto.</p>
+                    <a href="#" class="text-blue-500 hover:underline">Ver Más</a>
+                </div>
+            </div>
+        </div>
+        <div class="text-center mt-8">
+            <a href="#" class="bg-blue-500 text-white px-6 py-3 rounded hover:bg-blue-600">Ver Catálogo Completo</a>
+        </div>
+    </section>
+
+    <section class="container mx-auto py-12"></section>
+        <h2 class="text-3xl font-bold text-center mb-8">Participa en Nuestro Quiz</h2>
+        <div class="bg-white shadow-md rounded-lg overflow-hidden">            
+            <iframe class="jebbit-iframe" src="https://jebbit3.softseguros.com/ntb2v3vn?L=Full+Page&deferred=true" seamless="true" frameborder="0" webkitallowfullscreen mozallowfullscreen allowfullscreen style="width:100%;min-height:600px;" onload='function embedJebbit(t){function e(t){var e="attach"===t?window.addEventListener:window.removeEventListener;e("DOMContentLoaded",n,!1),e("load",n,!1),e("scroll",n,!1),e("resize",n,!1)}var i=document.querySelector(t);function n(){var t,e,n,o;e=(t=i).getBoundingClientRect(),n=t.clientHeight/2,o=t.clientWidth/2,e.top>=0&&e.left>=0&&e.top<=(window.innerHeight||document.documentElement.clientHeight)-n&&e.left<=(window.innerWidth||document.documentElement.clientWidth)-o&&i.contentWindow.postMessage("startJebbitCampaign","*")}window.addEventListener("message",function t(i){i&&"https://jebbit3.softseguros.com"===i.origin&&("jebbitSessionCreated"===i.data?e("remove",n):"jebbitCampaignLoaded"===i.data?n():i.data&&"redirect"===i.data.action&&i.data.options&&i.data.options.link&&(window.location.href=i.data.options.link))},!1),e("attach")}embedJebbit(".jebbit-iframe")'></iframe><script>window.addEventListener("message",function(t){if(t&&"https://jebbit3.softseguros.com"===t.origin&&t.data&&"GA4_EVENT"===t.data.action){var e="page_view";var a=t.data&&t.data.formData&&t.data.formData.object?t.data.formData.object:{};if(a){if(a.response||a.submissions){e="custom_event"}if(a.lead_source||a.lead_type){e="generate_lead"}if(a.items){e="add_to_cart"}}if(window.gtag){window.gtag("event",e,a)}else{window.dataLayer=window.dataLayer||[];var n={event:e};for(var r in a){if(a.hasOwnProperty(r)){n[r]=a[r]}}window.dataLayer.push(n)}}});</script>            
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer class="bg-gray-800 text-white py-6 mt-auto">
+        <div class="container mx-auto text-center">
+            <p>&copy; 2023 Camisetas Estampadas. Todos los derechos reservados.</p>
+            <div class="flex justify-center space-x-4 mt-4">
+                <!-- Social media icons (placeholder links) -->
+                <a href="#" class="hover:text-gray-400">Facebook</a>
+                <a href="#" class="hover:text-gray-400">Instagram</a>
+                <a href="#" class="hover:text-gray-400">Twitter</a>
+            </div>
+        </div>
+    </footer>
+</body>
+</html> 
