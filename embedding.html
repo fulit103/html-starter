@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Embedded Moments App Example</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <!-- Set a flag to indicate we're in embedded mode -->
+  <script>window.MomentsEmbedded = true;</script>
+  
+  <!-- Include the Ember app -->
+  <!-- <script src="http://localhost:3336/assets/app-bundle.js"></script> -->
+  <script src="https://dovgpmbtext1d.cloudfront.net/assets/app-bundle.js"></script>
+  
+  <!-- Include the app's CSS -->  
+  
+  <style>
+    .container {
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+    
+    .host-content {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+    
+    /* New styles for the side-by-side embedded apps */
+    .embedded-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .app-container {
+      width: 48%;
+      height: 400px;
+      border: 2px solid #ddd;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="host-content">
+    <h1>Host Page Content</h1>
+    <p>This is content from the host page that is embedding the Ember app.</p>
+    <button id="load-app">Load Embedded App</button>
+    <button id="unload-app" disabled>Unload Embedded App</button>
+  </div>
+  
+  <!-- Container for the embedded apps -->
+  <div class="embedded-container">
+    <div id="embedded-app-1" class="app-container"></div>
+    <div id="embedded-app-2" class="app-container"></div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {
+      let embeddedApp1 = null;
+      let embeddedApp2 = null;
+      
+      document.getElementById('load-app').addEventListener('click', function() {
+        if (!embeddedApp1) {
+          const container1 = document.getElementById('embedded-app-1');
+          
+          // Create a new instance of the Moments app
+          embeddedApp1 = new window.MomentsApp(container1, {
+            // Custom options can be passed here
+            campaignId: 'ugnr3eoy',
+            draft: true
+          });
+          
+          // Boot the first application
+          embeddedApp1.boot().then(() => {
+            console.log('First embedded app booted successfully');
+          }).catch(error => {
+            console.error('Error booting first embedded app:', error);
+          });
+        }
+        
+        if (!embeddedApp2) {
+          const container2 = document.getElementById('embedded-app-2');
+          
+          // Create a new instance of the Moments app for the second container
+          embeddedApp2 = new window.MomentsApp(container2, {
+            // You can use different options for the second app if needed
+            campaignId: 'ugnr3eoy',
+            draft: true
+          });
+          
+          // Boot the second application
+          embeddedApp2.boot().then(() => {
+            console.log('Second embedded app booted successfully');
+            document.getElementById('load-app').disabled = true;
+            document.getElementById('unload-app').disabled = false;
+          }).catch(error => {
+            console.error('Error booting second embedded app:', error);
+          });
+        }
+      });
+      
+      document.getElementById('unload-app').addEventListener('click', function() {
+        if (embeddedApp1) {
+          // Destroy the first application
+          embeddedApp1.destroy();
+          embeddedApp1 = null;
+        }
+        
+        if (embeddedApp2) {
+          // Destroy the second application
+          embeddedApp2.destroy();
+          embeddedApp2 = null;
+          
+          console.log('Embedded apps unloaded');
+          document.getElementById('load-app').disabled = false;
+          document.getElementById('unload-app').disabled = true;
+        }
+      });
+    });
+  </script>
+</body>
+</html> 
