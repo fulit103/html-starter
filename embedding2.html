@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <title>Embedded Moments App Example</title>
+  <meta name="description" content="">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  
+  <script>window.MomentsEmbedded = true;</script>
+
+  <script src="https://dovgpmbtext1d.cloudfront.net/embed-moments.js"></script>
+  
+  <!-- Include the app's CSS -->  
+  
+  <style>
+    .container {
+      width: 800px;
+      height: 600px;
+      margin: 0 auto;
+      border: 1px solid #ccc;
+      padding: 20px;
+    }
+    
+    .host-content {
+      margin-bottom: 20px;
+      padding: 10px;
+      background-color: #f5f5f5;
+    }
+    
+    /* New styles for the side-by-side embedded apps */
+    .embedded-container {
+      display: flex;
+      justify-content: space-between;
+      margin-bottom: 20px;
+    }
+    
+    .app-container {
+      width: 48%;
+      height: 660px;
+      border: 2px solid #ddd;
+      padding: 15px;
+      box-sizing: border-box;
+    }
+  </style>
+</head>
+<body>
+  <div class="host-content">
+    <h1>Host Page Content</h1>
+    <p>This is content from the host page that is embedding the Ember app.</p>
+    <button id="load-app">Load Embedded App</button>
+    <button id="unload-app" disabled>Unload Embedded App</button>
+  </div>
+  
+  <!-- Container for the embedded apps -->
+  <div class="embedded-container">
+    <div id="embedded-app-1" class="app-container"></div>
+    <div id="embedded-app-2" class="app-container"></div>
+  </div>
+  
+  <script>
+    document.addEventListener('DOMContentLoaded', function() {    
+        const c1 = document.getElementById('embedded-app-1');
+        const c2 = document.getElementById('embedded-app-2');
+
+        window.initJebbitMoments({
+            callback: () => {
+                // assets are loaded + meta tag is in place
+                embeddedApp1 = new window.MomentsApp(c1, {
+                    campaignId: 'tg5erg0k',
+                    draft: true,
+                });
+                
+                // Boot the first application
+                embeddedApp1.boot().then(() => {
+                    console.log('First embedded app booted successfully');
+                    console.log('First app booted');
+                // You can verify the config was correctly applied:
+                }).catch(error => {
+                    console.error('Error booting first embedded app:', error);
+                });
+          
+                // Create a new instance of the Moments app for the second container
+                embeddedApp2 = new window.MomentsApp(c2, {
+                    campaignId: 'jngfcgw6',
+                    draft: true,
+                });
+                
+                // Boot the second application
+                embeddedApp2.boot().then(() => {
+                    console.log('Second embedded app booted successfully');
+                    document.getElementById('load-app').disabled = true;
+                    document.getElementById('unload-app').disabled = false;
+                    console.log('Second app booted');
+                }).catch(error => {
+                    console.error('Error booting second embedded app:', error);
+                });
+            }
+        });
+    });
+  </script>
+</body>
+</html> 
