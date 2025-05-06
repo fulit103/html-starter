@@ -49,7 +49,9 @@
     <h1>Host Page Content</h1>
     <p>This is content from the host page that is embedding the Ember app.</p>
     <button id="load-app">Load Embedded App</button>
-    <button id="unload-app" disabled>Unload Embedded App</button>
+    <!--
+    <button id="unload-app" disabled>Unload Embedded App</button> 
+    -->
   </div>
   
   <!-- Container for the embedded apps -->
@@ -94,7 +96,7 @@
                   embeddedApp2.boot().then(() => {
                       console.log('Second embedded app booted successfully');
                       document.getElementById('load-app').disabled = true;
-                      document.getElementById('unload-app').disabled = false;
+                      //document.getElementById('unload-app').disabled = false;
                       console.log('Second app booted');
                   }).catch(error => {
                       console.error('Error booting second embedded app:', error);
