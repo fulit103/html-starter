@@ -64,6 +64,7 @@
         const c2 = document.getElementById('embedded-app-2');
 
         window.initJebbitMoments({
+            assetHost: 'https://d2genwge1af44w.cloudfront.net/',
             callback: () => {
                 // assets are loaded + meta tag is in place
                 embeddedApp1 = new window.MomentsApp(c1, {
