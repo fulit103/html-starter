@@ -59,44 +59,47 @@
   </div>
   
   <script>
-    document.addEventListener('DOMContentLoaded', function() {    
-        const c1 = document.getElementById('embedded-app-1');
-        const c2 = document.getElementById('embedded-app-2');
+    document.addEventListener('DOMContentLoaded', function() { 
 
-        window.initJebbitMoments({
-            assetHost: 'https://d2genwge1af44w.cloudfront.net/',
-            callback: () => {
-                // assets are loaded + meta tag is in place
-                embeddedApp1 = new window.MomentsApp(c1, {
-                    campaignId: 'tg5erg0k',
-                    draft: true,
-                });
-                
-                // Boot the first application
-                embeddedApp1.boot().then(() => {
-                    console.log('First embedded app booted successfully');
-                    console.log('First app booted');
-                // You can verify the config was correctly applied:
-                }).catch(error => {
-                    console.error('Error booting first embedded app:', error);
-                });
-          
-                // Create a new instance of the Moments app for the second container
-                embeddedApp2 = new window.MomentsApp(c2, {
-                    campaignId: 'jngfcgw6',
-                    draft: true,
-                });
-                
-                // Boot the second application
-                embeddedApp2.boot().then(() => {
-                    console.log('Second embedded app booted successfully');
-                    document.getElementById('load-app').disabled = true;
-                    document.getElementById('unload-app').disabled = false;
-                    console.log('Second app booted');
-                }).catch(error => {
-                    console.error('Error booting second embedded app:', error);
-                });
-            }
+        document.getElementById('load-app').addEventListener('click', function() {
+          const c1 = document.getElementById('embedded-app-1');
+          const c2 = document.getElementById('embedded-app-2');
+  
+          window.initJebbitMoments({
+              assetHost: 'https://d2genwge1af44w.cloudfront.net/',
+              callback: () => {
+                  // assets are loaded + meta tag is in place
+                  embeddedApp1 = new window.MomentsApp(c1, {
+                      campaignId: 'tg5erg0k',
+                      draft: true,
+                  });
+                  
+                  // Boot the first application
+                  embeddedApp1.boot().then(() => {
+                      console.log('First embedded app booted successfully');
+                      console.log('First app booted');
+                  // You can verify the config was correctly applied:
+                  }).catch(error => {
+                      console.error('Error booting first embedded app:', error);
+                  });
+            
+                  // Create a new instance of the Moments app for the second container
+                  embeddedApp2 = new window.MomentsApp(c2, {
+                      campaignId: 'jngfcgw6',
+                      draft: true,
+                  });
+                  
+                  // Boot the second application
+                  embeddedApp2.boot().then(() => {
+                      console.log('Second embedded app booted successfully');
+                      document.getElementById('load-app').disabled = true;
+                      document.getElementById('unload-app').disabled = false;
+                      console.log('Second app booted');
+                  }).catch(error => {
+                      console.error('Error booting second embedded app:', error);
+                  });
+              }
+          });
         });
     });
   </script>
