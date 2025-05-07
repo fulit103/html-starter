@@ -84,7 +84,7 @@
           new Promise((resolve, reject) => {
             const script = document.createElement('script');
             script.src = assetHost + src;
-            script.defer = true;
+            // script.defer = true;
             script.onload = () => resolve();
             script.onerror = () => reject(new Error(`Script load error: ${src}`));
             document.body.appendChild(script);
