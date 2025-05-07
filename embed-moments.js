@@ -96,11 +96,11 @@
   /**
    * Initialize and load the Moments Ember app assets.
    * @param {object} [opts]
-   * @param {string} [opts.environmentUrl]  — endpoint returning { environment, version, cssFiles, jsFiles }
-   * @param {string} [opts.metaTagName]     — name for the Ember meta tag
-   * @param {object} [opts.metaConfigOverrides] — partial overrides for the environment config
-   * @param {number} [opts.fetchTimeout]    — ms before aborting the fetch
-   * @param {function} [opts.callback]      — called once all assets are loaded
+   * @param {string} [opts.environmentUrl]        — endpoint returning { environment, version, cssFiles, jsFiles }
+   * @param {string} [opts.metaTagName]           — name for the Ember meta tag
+   * @param {object} [opts.metaConfigOverrides]   — partial overrides for the environment config
+   * @param {number} [opts.fetchTimeout]          — ms before aborting the fetch
+   * @param {function} [opts.callback]            — called once all assets are loaded
    * @returns {Promise<void>}
    */
   global.initJebbitMoments = async function (opts = {}) {
@@ -121,12 +121,23 @@
         configOpts.fetchTimeout,
       );
 
+      // 1a. If using v2, override jsFiles
       if (opts.version === 'v2') {
         jsFiles = [path];
       }
-
+      // 1b. If jsFiles explicitly provided, use those
       if (opts.jsFiles) {
         jsFiles = opts.jsFiles;
+      }
+
+      // 1c. Ensure the vendor bundle loads first
+      const vendorIdx = jsFiles.findIndex(src => {
+        const fname = src.split('/').pop();
+        return fname.startsWith('vendor.');
+      });
+      if (vendorIdx > -1) {
+        const [vendorFile] = jsFiles.splice(vendorIdx, 1);
+        jsFiles.unshift(vendorFile);
       }
 
       // 2. Parse default Ember config
