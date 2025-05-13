@@ -9,7 +9,26 @@
   
   <script>window.MomentsEmbedded = true;</script>
 
-  <script src="https://dovgpmbtext1d.cloudfront.net/jebbit-embedable-v1.js"></script>
+  <!-- <script src="https://dovgpmbtext1d.cloudfront.net/jebbit-embedable-v1.js"></script> -->
+
+  <script>
+    (function () {
+      const timestamp = Date.now();
+  
+      // Add script to <head>
+      const script = document.createElement('script');
+      script.src = `https://dovgpmbtext1d.cloudfront.net/jebbit-embedable-v1.js?v=${timestamp}`;
+      script.async = true;
+      document.head.appendChild(script);
+  
+      // Add div to <body> if it doesn't already exist
+      if (!document.getElementById('experience-container')) {
+        const container = document.createElement('div');
+        container.id = 'experience-container';
+        document.body.appendChild(container);
+      }
+    })();
+  </script>
   
   <!-- Include the app's CSS -->  
   
