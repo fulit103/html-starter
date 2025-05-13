@@ -56,7 +56,7 @@
   
   <!-- Container for the embedded apps -->
   <div class="embedded-container" >
-    <div id="embedded-app-1" class="app-container" id="experience-container"></div>
+    <div id="experience-container" class="app-container" ></div>
     <div id="embedded-app-2" class="app-container"></div>
   </div>
   
@@ -64,7 +64,7 @@
     document.addEventListener('DOMContentLoaded', function() { 
 
         document.getElementById('load-app').addEventListener('click', function() {
-          const c1 = document.getElementById('embedded-app-1');
+          const c1 = document.getElementById('experience-container');
           const c2 = document.getElementById('embedded-app-2');
   
           window.initJebbitMoments({
